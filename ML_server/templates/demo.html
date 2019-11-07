@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="/static/cover.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">AntiVenom</h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" href="#">Home</a>
+            <a class="nav-link" href="#">Download</a>
+            <a class="nav-link" href="#">Contact</a>
+          </nav>
+        </div>
+      </header>
+
+  <main role="main" class="inner cover">
+    <h1 class="cover-heading">Toxic Check</h1>
+    <p class="lead">Enter a sentence blow to know if it is toxic</p>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="input" placeholder="Example: I love you" aria-label="" aria-describedby="button-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" id="btn">check</button>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript">
+	    </script>
+       </div>
+    </div>
+
+    <canvas id="myChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+      var data = {
+          toxic: "0", severe_toxic: "0", obscene: "0",
+          threat: "0", insult: "0", identity_hate: "0"
+      };
+      var btn = document.getElementById("btn");
+		  btn.addEventListener('click',function(){
+		      const params = new URLSearchParams();
+			  params.append('key', 'dashuaige886');
+			  params.append('comment_text', document.getElementById("input").value);
+			  axios.post('http://3.19.255.170:8080/mlserver', params)
+  			  .then(function (response) {
+    		    	console.log(response.data);
+    		    	data = response.data;
+    		    	var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                      // The type of chart we want to create
+                      type: 'line',
+
+                      // The data for our dataset
+                      data: {
+                        labels: ['toxic', 'threat', 'severe toxic', 'obscene', 'insult', 'identity hate'],
+                        datasets: [{
+                        label: 'Severity',
+                        backgroundColor: '#FFFFFF',
+                        borderColor: '#336BFF',
+                        data: [data['toxic'], data['threat'],data['severe_toxic'], data['obscene'], data['insult'], data['identity_hate']]
+                      }]
+                    },
+                    // Configuration options go here
+                    options: {
+                          scales: {
+                            yAxes: [{
+                              display: true,
+                                ticks:{
+                                  beginAtZero: true,
+                                    steps: 5,
+                                    stepValue: 0.2,
+                                    max: 1
+                                }
+                            }]
+                          }
+                    }
+                  });
+			  })
+  			  .catch(function (error) {
+    		    	alert('error');
+  			  });
+		  },false)
+      </script>
+  </main>
+
+      <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p></p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

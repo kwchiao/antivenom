@@ -62,9 +62,17 @@ console.log("message: " + msg);
         comment_text: msg
     }))
         .then(function (response) {
-                console.log('connet success');
+                console.log('server connect success');
 		if (response.data['toxic'] < 0.5) {
-			 socket.broadcast.emit("received", { message: msg });
+			socket.broadcast.emit("received", { message: msg });
+			connect.then(db => {
+				      console.log("connected correctly to the server");
+				      let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
+				      chatMessage.save();
+				    });
+		}
+		else{
+			console.log('toxic message detected:',msg)
 		}
         })
         .catch(function (error) {
@@ -75,12 +83,11 @@ console.log("message: " + msg);
     //socket.broadcast.emit("received", { message: msg });
 
     //save chat to the database
-    connect.then(db => {
-      console.log("connected correctly to the server");
-      let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
-
-      chatMessage.save();
-    });
+    //connect.then(db => {
+      //console.log("connected correctly to the server");
+      //let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
+      //chatMessage.save();
+    //});
   });
 });
 

@@ -62,14 +62,17 @@ console.log("message: " + msg);
         comment_text: msg
     }))
         .then(function (response) {
-                console.log(response);
+                console.log('connet success');
+		if (response.data['toxic'] < 0.5) {
+			 socket.broadcast.emit("received", { message: msg });
+		}
         })
         .catch(function (error) {
                 console.log(error);
         });
 
     //broadcast message to everyone in port:5000 except yourself.
-    socket.broadcast.emit("received", { message: msg });
+    //socket.broadcast.emit("received", { message: msg });
 
     //save chat to the database
     connect.then(db => {

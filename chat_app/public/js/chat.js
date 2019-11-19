@@ -24,6 +24,17 @@ var messages = document.getElementById("messages");
     messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
     console.log("Hello bingo!");
   });
+
+  socket.on("warning", data => {
+    let li = document.createElement("li");
+    li.className = "warning";
+    let span = document.createElement("span");
+    var messages = document.getElementById("messages");
+    messages.appendChild(li).append("WARNING! TOXIC MESSAGE BLOCKED!");
+    messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
+    // console.log("Hello bingo!");
+  })
+
 })();
 
 // fetching initial chat messages from the database

@@ -72,6 +72,7 @@ console.log("message: " + msg);
 				    });
 		}
 		else{
+      socket.broadcast.emit("warning");
 			console.log('toxic message detected:',msg)
 		}
         })

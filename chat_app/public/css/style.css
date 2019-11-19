@@ -199,13 +199,26 @@ body {
 
 .messages > li {
   font-size: 15px;
-  color: rgb(13, 223, 153);
-  background: #f7a30675;
+  color: rgb(0, 0, 0);
+  background: #f1f0f0;
   border-radius: 5px;
-  width: fit-content;
+  width: max-content;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+li.warning {
+  font-size: 15px;
+  color: white;
+  background:red;
+  border-radius: 5px;
+  width: max-content;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .messages > span {
   font-size: 10px;
   font-style: italic;
+  color: rgba(0, 0, 0, 0.4)
 }

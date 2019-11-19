@@ -59,6 +59,37 @@
           toxic: "0", severe_toxic: "0", obscene: "0",
           threat: "0", insult: "0", identity_hate: "0"
       };
+
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'line',
+          // The data for our dataset
+          data: {
+              labels: ['toxic', 'threat', 'severe toxic', 'obscene', 'insult', 'identity hate'],
+              datasets: [{
+                  label: 'Severity',
+                  backgroundColor: '#FFFFFF',
+                  borderColor: '#336BFF',
+                  data: [data['toxic'], data['threat'],data['severe_toxic'], data['obscene'], data['insult'], data['identity_hate']]
+              }]
+          },
+          // Configuration options go here
+          options: {
+              scales: {
+                  yAxes: [{
+                      display: true,
+                      ticks:{
+                          beginAtZero: true,
+                          steps: 5,
+                          stepValue: 0.2,
+                          max: 1
+                      }
+                  }]
+              }
+          }
+      });
+
       var btn = document.getElementById("btn");
 		  btn.addEventListener('click',function(){
 		      const params = new URLSearchParams();
@@ -68,13 +99,7 @@
   			  .then(function (response) {
     		    	console.log(response.data);
     		    	data = response.data;
-    		    	var ctx = document.getElementById('myChart').getContext('2d');
-                    var chart = new Chart(ctx, {
-                      // The type of chart we want to create
-                      type: 'line',
-
-                      // The data for our dataset
-                      data: {
+                    chart.data = {
                         labels: ['toxic', 'threat', 'severe toxic', 'obscene', 'insult', 'identity hate'],
                         datasets: [{
                         label: 'Severity',
@@ -82,22 +107,8 @@
                         borderColor: '#336BFF',
                         data: [data['toxic'], data['threat'],data['severe_toxic'], data['obscene'], data['insult'], data['identity_hate']]
                       }]
-                    },
-                    // Configuration options go here
-                    options: {
-                          scales: {
-                            yAxes: [{
-                              display: true,
-                                ticks:{
-                                  beginAtZero: true,
-                                    steps: 5,
-                                    stepValue: 0.2,
-                                    max: 1
-                                }
-                            }]
-                          }
-                    }
-                  });
+                    };
+                    chart.update();
 			  })
   			  .catch(function (error) {
     		    	alert('error');

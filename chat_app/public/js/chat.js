@@ -10,7 +10,7 @@ var messages = document.getElementById("messages");
     messages.appendChild(li).append($("#message").val());
     let span = document.createElement("span");
     messages.appendChild(span).append("by " + "Anonymous" + ": " + "just now");
-
+    $("#messages").animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
     $("#message").val("");
 
     return false;
@@ -23,6 +23,7 @@ var messages = document.getElementById("messages");
     messages.appendChild(li).append(data.message);
     messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
     console.log("Hello bingo!");
+    $("#messages").animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
   });
 
   socket.on("warning", data => {
@@ -33,6 +34,7 @@ var messages = document.getElementById("messages");
     messages.appendChild(li).append("WARNING! TOXIC MESSAGE BLOCKED!");
     messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
     // console.log("Hello bingo!");
+      $("#messages").animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
   })
 
 })();

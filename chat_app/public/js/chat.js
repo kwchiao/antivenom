@@ -54,6 +54,7 @@ var messages = document.getElementById("messages");
           .appendChild(span)
           .append("by " + data.sender + ": " + formatTimeAgo(data.createdAt));
       });
+      $("#messages").animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
     });
 })();
 
